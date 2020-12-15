@@ -425,10 +425,10 @@ meaning, “or not” is needed
 		try {
 
 			StopProjectVersionRequest request = new StopProjectVersionRequest()
-					.withProjectVersionArn(awsProjectARN);
+					.withProjectVersionArn(awsRekognitionARN);
 			StopProjectVersionResult result = rekognitionClient.stopProjectVersion(request);
 
-			System.out.println(result.getStatus());
+			System.out.println("Result: " + result.getStatus());
 
 		} catch(Exception e) {
 			System.out.println(e.toString());
