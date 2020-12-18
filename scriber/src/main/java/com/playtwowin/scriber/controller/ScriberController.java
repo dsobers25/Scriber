@@ -34,6 +34,8 @@ import com.amazonaws.services.s3.model.GetObjectRequest;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.textract.model.*;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.rendering.PDFRenderer;
 
@@ -70,6 +72,7 @@ import java.util.ArrayList;
 
 @RestController
 @RequestMapping("/api")
+@Api(value="scriber")
 public class ScriberController {
 
 	// Create credentials using a provider chain. For more information, see
@@ -87,8 +90,6 @@ public class ScriberController {
 	
 	@Autowired
 	SubmissionDetailsRepo submittedDetailsRepo;
-
-	String bucketName = "logostoragehackengers";
 	
 	static List<String> noWords = new ArrayList<>(List.of(
 			"Achieve",           
@@ -122,6 +123,7 @@ public class ScriberController {
 //    curl -k -X POST -F 'image=@/Pictures/running_cheetah.jpg' -v  http://localhost:8080/upload/
 
 	@PostMapping("/upload")
+	@ApiOperation(value = "upload")
 	public String fileUploader(@RequestParam("file") MultipartFile multipartFile) {
 		String fileName = multipartFile.getOriginalFilename();
 		return fileName;
@@ -368,9 +370,9 @@ meaning, “or not” is needed
 
     	if(fileType.equals("document")){
 			// Upload file to s3
-			documentTextService.uploadToS3(bucketName, multipartFile.getOriginalFilename(), multipartFile);
+			// documentTextService.uploadToS3(bucketName, multipartFile.getOriginalFilename(), multipartFile);
 		}
-		
+
 		// output PDF or IMAGE
 		System.out.println(multipartFile.getContentType());
 
